@@ -1,0 +1,7 @@
+Random string generated is: ABLCCHGCDGGD
+Random Alphanumeric String generated is: JADIGINANENMBFD
+Random number generated is: 149
+Random email generated is: JAADCFBBBA@yahoo.com
+Random Phone Number generated is: +10276300162
+Random date generated is: Fri Nov 14 2025 05:29:23 GMT+0530 (India Standard Time)
+Random date new format generated is: Wed Sep 24 2025 01:05:43 GMT+0530 (India Standard Time)

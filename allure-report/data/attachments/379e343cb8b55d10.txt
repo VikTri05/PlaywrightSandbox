@@ -1,0 +1,7 @@
+Random string generated is: CBHJKKGGFJHI
+Random Alphanumeric String generated is: KLABJDKALBAIMJB
+Random number generated is: 42
+Random email generated is: IIGIJHGACE@@example.com
+Random Phone Number generated is: +15527557199
+Random date generated is: Thu Nov 27 2025 12:10:15 GMT+0530 (India Standard Time)
+Random date new format generated is: Wed Aug 06 2025 23:00:30 GMT+0530 (India Standard Time)

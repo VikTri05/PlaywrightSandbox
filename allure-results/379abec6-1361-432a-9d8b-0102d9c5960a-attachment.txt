@@ -1,0 +1,5 @@
+[2025-12-14T14:20:48.799Z] INFO:  Navigating to the Login Page
+[2025-12-14T14:20:52.009Z] INFO:  Checking for the webpage header
+[2025-12-14T14:20:52.056Z] INFO:  Filling in the username
+[2025-12-14T14:20:52.095Z] INFO:  Filling in the password
+[2025-12-14T14:20:52.138Z] INFO:  Clicking on Login button
