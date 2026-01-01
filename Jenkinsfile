@@ -21,7 +21,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 dir('PlaywrightSandbox') {
-                    bat 'npx playwright test --reporter=html'
+                    bat 'npx playwright test src/tests --reporter=html'
                 }
             }
         }
