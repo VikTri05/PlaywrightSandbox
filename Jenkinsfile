@@ -20,9 +20,7 @@ pipeline {
         
         stage('Run Tests') {
             steps {
-                dir('PlaywrightSandbox') {
                     bat 'npx playwright test src/tests --reporter=html'
-                }
             }
         }
         stage('Archive HTML results'){
