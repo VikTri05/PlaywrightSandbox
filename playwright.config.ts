@@ -26,8 +26,8 @@ export default defineConfig({
   workers: process.env.CI ? 2 : 2,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: process.env.CI
-  ? [['list'],['html', {open: 'never'}],['allure-playwright']]
-  : [['list'],['html', {open: 'never'}],['allure-playwright']]
+  ? [['list'],['html', {open: 'never'}],['allure-playwright'],['json', { outputFile: 'test-results/results.json' }]]
+  : [['list'],['html', {open: 'never'}],['allure-playwright'],['json', { outputFile: 'test-results/results.json' }]]
 ,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
    /*reporter: [
