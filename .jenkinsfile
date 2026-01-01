@@ -57,7 +57,7 @@ pipeline {
         always {
             // Email with HTML content and attachment
             emailext(
-                subject: "Playwright Test Report - ${currentBuild.currentResult} | Build#${env.BUILD_NUMBER} | ${env.JOB_NAME}"
+                subject: "Playwright Test Report - ${currentBuild.currentResult} | Build#${env.BUILD_NUMBER} | ${env.JOB_NAME}",
                 body: """
                 <html>
                   <body style="font-family: Arial, sans-serif; color: #333;">
@@ -76,7 +76,7 @@ pipeline {
                 mimeType: 'text/html',
                 to: 'username@mail.com',
                 attachLog: true,
-                attachmetsPattern: 'playwright-report/index.html'
+                attachmentsPattern: 'playwright-report/index.html'
             )
         }
     }
