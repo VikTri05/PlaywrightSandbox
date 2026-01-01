@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     tools {
-        nodejs 'NodeJS 24.0.0'
+        nodejs 'Node24'
     }
     triggers{
         cron('0 22 * * *')
