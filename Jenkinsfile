@@ -60,7 +60,7 @@ pipeline {
                 """,
 
                 mimeType: 'text/html',
-                to: 'username@mail.com',
+                to: 'vikas.tripathi05081990@gmail.com',
                 attachLog: true,
                 attachmentsPattern: 'playwright-report/index.html'
             )
