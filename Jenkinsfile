@@ -111,7 +111,7 @@ pipeline {
                         ${icon} ${test.status}
                     </td>
                     <td style="padding:10px;border:1px solid #ddd;text-align:center;">
-                        ${(test.duration / 1000).round(2)}s
+                        ${String.format('%.2f', test.duration / 1000.0)}s
                     </td>
                 </tr>
                 """
