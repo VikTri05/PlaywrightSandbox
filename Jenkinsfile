@@ -78,7 +78,7 @@ pipeline {
 
             // Read JSON safely (NO plugin needed)
             def jsonText = readFile(jsonPath)
-            def jsonResults = new groovy.json.JsonSlurper().parseText(jsonText)
+            def jsonResults = new groovy.json.JsonSlurperClassic().parseText(jsonText)
 
             def passed = 0
             def failed = 0
