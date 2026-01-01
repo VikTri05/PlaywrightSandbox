@@ -16,7 +16,7 @@ pipeline {
                     usernameVariable: 'GIT_USERNAME',
                     passwordVariable: 'GIT_PASSWORD'
                 )]) {
-                    sh 'git clone https://github.com/VikTri05/PlaywrightSandbox.git'
+                    bat 'git clone https://github.com/VikTri05/PlaywrightSandbox.git'
                 }
             }
         }
@@ -24,8 +24,8 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 dir('PlaywrightSandbox') {
-                    sh 'npm ci'
-                    sh 'npx playwright install --with-deps'
+                    bat 'npm ci'
+                    bat 'npx playwright install --with-deps'
                 }
             }
         }
@@ -33,7 +33,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 dir('PlaywrightSandbox') {
-                    sh 'npx playwright test --reporter=html'
+                    bat 'npx playwright test --reporter=html'
                 }
             }
         }
