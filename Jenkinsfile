@@ -20,7 +20,7 @@ pipeline {
         
         stage('Run Tests') {
             steps {
-                    bat 'npx playwright test src/tests --reporter=html'
+                    bat 'npx playwright test src/tests --reporter=html,json'
             }
         }
         stage('Archive HTML results'){
