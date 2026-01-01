@@ -70,13 +70,14 @@ pipeline {
     post {
     always {
         script {
-            if (!fileExists('test-results/results.json')) {
+            def jsonPath = "${env.WORKSPACE}/test-results/results.json"
+            if (!fileExists(jsonPath)) {
                 echo "results.json not found, skipping email report"
                 return
             }
 
             // Read JSON safely (NO plugin needed)
-            def jsonText = readFile('test-results/results.json')
+            def jsonText = readFile(jsonPath)
             def jsonResults = new groovy.json.JsonSlurper().parseText(jsonText)
 
             def passed = 0
@@ -86,7 +87,7 @@ pipeline {
             jsonResults.suites.each { suite ->
                 suite.specs.each { spec ->
                     spec.tests.each { test ->
-                        def result = test.results[0]
+                        def result = test.results[-1]
                         def status = result.status
 
                         if (status == 'passed') passed++
