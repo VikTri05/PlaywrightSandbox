@@ -8,19 +8,7 @@ pipeline {
         cron('0 22 * * *')
     }
     
-    stages {
-        stage('Checkout Git') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'your-credentials-id',
-                    usernameVariable: 'GIT_USERNAME',
-                    passwordVariable: 'GIT_PASSWORD'
-                )]) {
-                    bat 'git clone https://github.com/VikTri05/PlaywrightSandbox.git'
-                }
-            }
-        }
-        
+    stages {        
         stage('Install Dependencies') {
             steps {
                 dir('PlaywrightSandbox') {
