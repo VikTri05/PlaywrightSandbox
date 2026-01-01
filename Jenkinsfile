@@ -70,73 +70,91 @@ pipeline {
     post {
     always {
         script {
-            // Read JSON results
-            def jsonResults = readJSON file: 'test-results/results.json'
+            if (!fileExists('test-results/results.json')) {
+                echo "results.json not found, skipping email report"
+                return
+            }
+
+            // Read JSON safely (NO plugin needed)
+            def jsonText = readFile('test-results/results.json')
+            def jsonResults = new groovy.json.JsonSlurper().parseText(jsonText)
+
             def passed = 0
             def failed = 0
             def testDetails = []
-            
+
             jsonResults.suites.each { suite ->
                 suite.specs.each { spec ->
                     spec.tests.each { test ->
-                        def status = test.results[0].status
+                        def result = test.results[0]
+                        def status = result.status
+
                         if (status == 'passed') passed++
                         else if (status == 'failed') failed++
-                        
+
                         testDetails << [
                             name: test.title,
                             status: status,
-                            duration: test.results[0].duration
+                            duration: result.duration ?: 0
                         ]
                     }
                 }
             }
-            
+
             def testRows = testDetails.collect { test ->
                 def icon = test.status == 'passed' ? '✅' : '❌'
                 """
                 <tr>
-                    <td style="padding: 10px; border: 1px solid #ddd;">${test.name}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${icon} ${test.status}</td>
-                    <td style="padding: 10px; border: 1px solid #ddd; text-align: center;">${(test.duration/1000).round(2)}s</td>
+                    <td style="padding:10px;border:1px solid #ddd;">${test.name}</td>
+                    <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+                        ${icon} ${test.status}
+                    </td>
+                    <td style="padding:10px;border:1px solid #ddd;text-align:center;">
+                        ${(test.duration / 1000).round(2)}s
+                    </td>
                 </tr>
                 """
             }.join('')
-            
+
             emailext(
-                subject: "Playwright Test Report - ${passed} Passed, ${failed} Failed | Build#${env.BUILD_NUMBER}",
+                subject: "Playwright Test Report | ${passed} Passed, ${failed} Failed | Build #${env.BUILD_NUMBER}",
+                mimeType: 'text/html',
+                to: 'vikas.tripathi05081990@gmail.com',
                 body: """
                 <html>
                 <body style="font-family: Arial, sans-serif;">
-                    <h2 style="color: #0078d7;">Playwright Test Execution Report</h2>
-                    <p><strong>Total Tests:</strong> ${testDetails.size()} | 
-                       <strong style="color: green;">Passed:</strong> ${passed} | 
-                       <strong style="color: red;">Failed:</strong> ${failed}</p>
-                    
-                    <h3>Test Details:</h3>
-                    <table style="border-collapse: collapse; width: 100%;">
+                    <h2 style="color:#0078d7;">Playwright Test Execution Report</h2>
+
+                    <p>
+                        <strong>Total:</strong> ${testDetails.size()} |
+                        <span style="color:green;"><strong>Passed:</strong> ${passed}</span> |
+                        <span style="color:red;"><strong>Failed:</strong> ${failed}</span>
+                    </p>
+
+                    <table style="border-collapse:collapse;width:100%;">
                         <thead>
-                            <tr style="background-color: #f2f2f2;">
-                                <th style="padding: 10px; border: 1px solid #ddd;">Test Name</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Status</th>
-                                <th style="padding: 10px; border: 1px solid #ddd;">Duration</th>
+                            <tr style="background:#f2f2f2;">
+                                <th style="padding:10px;border:1px solid #ddd;">Test</th>
+                                <th style="padding:10px;border:1px solid #ddd;">Status</th>
+                                <th style="padding:10px;border:1px solid #ddd;">Duration</th>
                             </tr>
                         </thead>
                         <tbody>
                             ${testRows}
                         </tbody>
                     </table>
-                    
-                    <p style="margin-top: 20px;">
-                        <a href="${env.BUILD_URL}Playwright_20Test_20Report">View Full HTML Report</a>
+
+                    <p style="margin-top:20px;">
+                        <a href="${env.BUILD_URL}Playwright_20Test_20Report">
+                            View Full HTML Report
+                        </a>
                     </p>
                 </body>
                 </html>
-                """,
-                mimeType: 'text/html',
-                to: 'vikas.tripathi05081990@gmail.com'
+                """
             )
         }
     }
 }
+
 }
