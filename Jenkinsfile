@@ -29,12 +29,12 @@ pipeline {
                 allowMissing: false,
                 alwaysLinkToLastBuild: true,
                 keepAll: true,
-                reportDir: 'PlaywrightSandbox/playwright-report',
+                reportDir: 'playwright-report',
                 reportFiles: 'index.html',
                 reportName: 'Playwright Test Report',
                 reportTitles: ''
             ])
-            archiveArtifacts artifacts: 'PlaywrightSandbox/playwright-report/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'playwright-report/**', allowEmptyArchive: true
             }
         }
     }
